@@ -10,14 +10,8 @@ pub struct Release {
     pub title: String,
     pub title_ru: Option<String>,
     pub shikimori_id: Option<String>,
-    pub translation: Translation,
+    pub translation: Option<Translation>,
     pub seasons: Option<Vec<Season>>,
-}
-
-impl fmt::Display for Release {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{} - {}", self.title, self.translation)
-    }
 }
 
 #[derive(Debug, Clone)]

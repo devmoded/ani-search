@@ -1,4 +1,5 @@
 use crate::APP_NAME;
+use crate::providers::shikimori::Orders;
 use clap::{Parser, Subcommand};
 
 #[derive(Parser, Debug)]
@@ -26,7 +27,15 @@ pub enum Commands {
 
 #[derive(Subcommand, Debug)]
 pub enum ShikimoriCommands {
-    Search,
+    Search {
+        #[arg(short, long)]
+        query: String,
+        #[arg(short, long)]
+        limit: u32,
+        /// Допустимые значения [id, ranked, kind, popularity, name, aired_on, episodes, status, random]
+        #[arg(short, long)]
+        order: Orders,
+    },
     Info,
 }
 
