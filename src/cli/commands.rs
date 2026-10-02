@@ -22,19 +22,22 @@ pub async fn setup() -> Result<()> {
                 Some(api) => api,
                 None => "https://shikimori.io".to_string(),
             };
+            let shikimori = Shikimori::new(&api_url, reqwest_client);
             match command {
                 ShikimoriCommands::Search {
                     query,
                     limit,
                     order,
                 } => {
-                    let releases = Shikimori::new(&api_url, reqwest_client)
-                        .search(&query, limit, order)
-                        .await?;
+                    let releases = shikimori.search(&query, limit, order).await?;
 
                     output.print(&releases)?;
                 }
-                ShikimoriCommands::Info => {}
+                ShikimoriCommands::Info { shikimori_id } => {
+                    let anime = shikimori.info(&shikimori_id.to_string()).await?;
+
+                    output.print(&anime)?;
+                }
             }
         }
         Commands::Kodik { command } => {

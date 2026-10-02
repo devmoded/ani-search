@@ -40,7 +40,10 @@ pub enum ShikimoriCommands {
         order: Orders,
     },
     /// Информация об указанном аниме
-    Info,
+    Info {
+        #[arg(short, long)]
+        shikimori_id: u32,
+    },
 }
 
 #[derive(Subcommand, Debug)]

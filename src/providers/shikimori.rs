@@ -2,7 +2,7 @@ use crate::error::{Error, Sources};
 use crate::types::Release;
 use anyhow::{Context, Result};
 use reqwest::Client;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use strum::{Display, EnumString};
 
 #[derive(Debug, Display, EnumString, Clone)]
@@ -19,12 +19,77 @@ pub enum Orders {
     Random,
 }
 
-#[derive(Deserialize, Debug)]
-struct Anime {
+#[derive(Debug, Display, EnumString, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+#[strum(serialize_all = "snake_case")]
+pub enum Kind {
+    Tv,
+    Movie,
+    Ova,
+    Ona,
+    Special,
+    TvSpecial,
+    Music,
+    Pv,
+    Cm,
+    #[serde(rename = "tv_13")]
+    Tv13,
+    #[serde(rename = "tv_24")]
+    Tv24,
+    #[serde(rename = "tv_48")]
+    Tv48,
+}
+
+#[derive(Debug, Display, EnumString, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+#[strum(serialize_all = "snake_case")]
+pub enum Status {
+    Anons,
+    Ongoing,
+    Released,
+}
+
+#[derive(Debug, Display, EnumString, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+#[strum(serialize_all = "snake_case")]
+pub enum Rating {
+    None,
+    G,
+    Pg,
+    #[serde(rename = "pg_13")]
+    Pg13,
+    R,
+    RPlus,
+    Rx,
+}
+
+#[derive(Deserialize, Debug, Serialize)]
+pub struct Image {
+    original: String,
+    preview: String,
+    x96: String,
+    x48: String,
+}
+
+#[derive(Deserialize, Debug, Serialize)]
+pub struct Anime {
     id: u64,
     name: String,
     #[serde(default)]
     russian: String,
+    image: Image,
+    url: String,
+    kind: Kind,
+    score: String,
+    status: Status,
+    rating: Rating,
+    duration: u32,
+    episodes: u32,
+    episodes_aired: u32,
+    description: Option<String>,
+    anons: bool,
+    ongoing: bool,
+    myanimelist_id: u32,
 }
 
 impl From<Anime> for Release {
@@ -87,6 +152,28 @@ impl Shikimori {
                 query: query.to_string(),
             }
         );
+
+        Ok(response)
+    }
+
+    pub async fn info(&self, shikimori_id: &str) -> Result<Anime> {
+        let response: Anime = self
+            .reqwest_client
+            .get(&format!(
+                "{}{}{}",
+                &self.api_url, "/api/animes/", shikimori_id
+            ))
+            .send()
+            .await
+            .context(Error::NotFound {
+                src: Sources::Shikimori,
+                query: format!("shikimori id: {}", shikimori_id),
+            })?
+            .json()
+            .await
+            .context(Error::Parse {
+                src: Sources::Shikimori,
+            })?;
 
         Ok(response)
     }
