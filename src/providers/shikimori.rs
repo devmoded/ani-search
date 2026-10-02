@@ -59,7 +59,7 @@ impl Shikimori {
     pub async fn search(&self, query: &str, limit: u32, order: Orders) -> Result<Vec<Release>> {
         let response: Vec<Release> = self
             .reqwest_client
-            .get(&self.api_url)
+            .get(&format!("{}{}", &self.api_url, "/api/animes"))
             .query(&[
                 ("search", query),
                 ("limit", &limit.to_string()),

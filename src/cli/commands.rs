@@ -15,13 +15,10 @@ pub async fn setup() -> Result<()> {
         .build()?;
 
     match cli.command {
-        Commands::Shikimori {
-            api_url: shikimori_api_url,
-            command,
-        } => {
-            let api_url = match shikimori_api_url {
+        Commands::Shikimori { api_url, command } => {
+            let api_url = match api_url {
                 Some(api) => api,
-                None => "https://shikimori.io/api/animes".to_string(),
+                None => "https://shikimori.io".to_string(),
             };
             match command {
                 ShikimoriCommands::Search {
