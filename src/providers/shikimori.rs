@@ -82,14 +82,14 @@ pub struct Anime {
     kind: Kind,
     score: String,
     status: Status,
-    rating: Rating,
-    duration: u32,
     episodes: u32,
     episodes_aired: u32,
+    rating: Option<Rating>,
+    duration: Option<u32>,
     description: Option<String>,
-    anons: bool,
-    ongoing: bool,
-    myanimelist_id: u32,
+    anons: Option<bool>,
+    ongoing: Option<bool>,
+    myanimelist_id: Option<u32>,
 }
 
 impl From<Anime> for Release {
