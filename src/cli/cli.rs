@@ -1,5 +1,5 @@
-use crate::APP_NAME;
 use crate::providers::shikimori::Orders;
+use crate::{APP_NAME, types::Quality};
 use clap::{Parser, Subcommand};
 
 #[derive(Parser, Debug)]
@@ -18,8 +18,6 @@ pub enum Commands {
         command: ShikimoriCommands,
     },
     Kodik {
-        #[arg(long)]
-        api_token: String,
         #[command(subcommand)]
         command: KodikCommands,
     },
@@ -41,6 +39,16 @@ pub enum ShikimoriCommands {
 
 #[derive(Subcommand, Debug)]
 pub enum KodikCommands {
-    Find,
-    Resolve,
+    Find {
+        #[arg(short, long)]
+        shikimori_id: u32,
+        #[arg(long)]
+        api_token: String,
+    },
+    Resolve {
+        #[arg(short, long)]
+        player_url: String,
+        #[arg(short, long)]
+        quality: Quality,
+    },
 }

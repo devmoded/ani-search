@@ -1,4 +1,13 @@
 use std::fmt;
+use strum::{Display, EnumString};
+
+#[derive(Debug, Clone, EnumString, Display)]
+#[strum(serialize_all = "snake_case")]
+pub enum Quality {
+    Hd720p,
+    Sd480p,
+    Low360p,
+}
 
 #[derive(Debug, Clone)]
 pub struct Response {
@@ -32,21 +41,12 @@ impl fmt::Display for Season {
 #[derive(Debug, Clone)]
 pub struct Episode {
     pub num: u32,
-    pub url: String,
-}
-
-impl Episode {
-    pub fn new(num: u32, url: &str) -> Self {
-        Self {
-            num,
-            url: url.to_string(),
-        }
-    }
+    pub player_url: String,
 }
 
 impl fmt::Display for Episode {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}: {}", self.num, self.url)
+        write!(f, "{}: {}", self.num, self.player_url)
     }
 }
 
