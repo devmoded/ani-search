@@ -53,7 +53,7 @@ impl Kodik {
         Ok(Response::from(&response))
     }
 
-    pub async fn resolve_link(&self, player_url: &str, quality: &Quality) -> Result<ResolveResult> {
+    pub async fn resolve(&self, player_url: &str, quality: &Quality) -> Result<ResolveResult> {
         let url = format!("https:{player_url}");
         let links = kodik_parser::parse(&self.resolve_client, &url).await?.links;
 

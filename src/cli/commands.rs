@@ -56,7 +56,7 @@ pub async fn setup() -> Result<()> {
                     player_url,
                     quality,
                 } => {
-                    let res = kodik.resolve_link(&player_url, &quality).await?;
+                    let res = kodik.resolve(&player_url, &quality).await?;
 
                     output.print(&res)?;
                 }
