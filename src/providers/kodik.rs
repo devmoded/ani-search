@@ -1,5 +1,5 @@
 use crate::error::{Error, Sources};
-use crate::types::{Episode, Quality, Release, Response, Season, Translation};
+use crate::types::{Episode, Quality, Release, ResolveResult, Response, Season, Translation};
 use anyhow::{Context, Result};
 use kodik_api::{
     Client as ApiClient,
@@ -53,7 +53,7 @@ impl Kodik {
         Ok(Response::from(&response))
     }
 
-    pub async fn resolve_link(&self, player_url: &str, quality: &Quality) -> Result<String> {
+    pub async fn resolve_link(&self, player_url: &str, quality: &Quality) -> Result<ResolveResult> {
         let url = format!("https:{player_url}");
         let links = kodik_parser::parse(&self.resolve_client, &url).await?.links;
 
@@ -87,7 +87,7 @@ impl Kodik {
                 .clone(),
         };
 
-        Ok(m3u8)
+        Ok(ResolveResult { m3u8 })
     }
 }
 

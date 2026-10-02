@@ -21,6 +21,7 @@ dependencies = [
  "kodik-parser",
  "reqwest",
  "serde",
+ "serde_json",
  "strum",
  "thiserror",
  "tokio",

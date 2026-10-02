@@ -1,6 +1,7 @@
 use crate::cli::cli::Cli;
 use crate::cli::cli::Commands;
 use crate::cli::cli::{KodikCommands, ShikimoriCommands};
+use crate::output::Output;
 use crate::providers::kodik::Kodik;
 use crate::providers::shikimori::Shikimori;
 use crate::{APP_NAME, APP_VERSION};
@@ -10,6 +11,7 @@ use reqwest::Client;
 
 pub async fn setup() -> Result<()> {
     let cli = Cli::parse();
+    let output = Output::new();
     let reqwest_client = Client::builder()
         .user_agent(format!("{APP_NAME}-rust/{APP_VERSION}"))
         .build()?;
@@ -30,7 +32,7 @@ pub async fn setup() -> Result<()> {
                         .search(&query, limit, order)
                         .await?;
 
-                    println!("{:#?}", releases)
+                    output.print(&releases)?;
                 }
                 ShikimoriCommands::Info => {}
             }
@@ -48,17 +50,15 @@ pub async fn setup() -> Result<()> {
                         .find(&shikimori_id.to_string())
                         .await?;
 
-                    let releases = response.releases;
-
-                    println!("{:#?}", releases)
+                    output.print(&response.releases)?;
                 }
                 KodikCommands::Resolve {
                     player_url,
                     quality,
                 } => {
-                    let m3u8 = kodik.resolve_link(&player_url, &quality).await?;
+                    let res = kodik.resolve_link(&player_url, &quality).await?;
 
-                    println!("{:#?}", m3u8)
+                    output.print(&res)?;
                 }
             }
         }

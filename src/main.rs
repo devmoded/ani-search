@@ -1,5 +1,6 @@
 mod cli;
 mod error;
+mod output;
 mod providers;
 mod types;
 

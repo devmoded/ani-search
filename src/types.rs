@@ -1,7 +1,13 @@
+use serde::Serialize;
 use std::fmt;
 use strum::{Display, EnumString};
 
-#[derive(Debug, Clone, EnumString, Display)]
+#[derive(Debug, Clone, Serialize)]
+pub struct ResolveResult {
+    pub m3u8: String,
+}
+
+#[derive(Debug, Clone, EnumString, Display, Serialize)]
 #[strum(serialize_all = "snake_case")]
 pub enum Quality {
     Hd720p,
@@ -14,7 +20,7 @@ pub struct Response {
     pub releases: Vec<Release>,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct Release {
     pub title: String,
     pub title_ru: Option<String>,
@@ -23,7 +29,7 @@ pub struct Release {
     pub seasons: Option<Vec<Season>>,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct Season {
     pub title: Option<String>,
     pub episodes: Vec<Episode>,
@@ -38,7 +44,7 @@ impl fmt::Display for Season {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct Episode {
     pub num: u32,
     pub player_url: String,
@@ -50,7 +56,7 @@ impl fmt::Display for Episode {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct Translation {
     pub title: String,
     pub id: u32,
