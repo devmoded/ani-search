@@ -84,6 +84,8 @@ pub struct Anime {
     status: Status,
     episodes: u32,
     episodes_aired: u32,
+    aired_on: Option<String>,
+    released_on: Option<String>,
     rating: Option<Rating>,
     duration: Option<u32>,
     description: Option<String>,
