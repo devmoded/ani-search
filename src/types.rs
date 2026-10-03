@@ -4,10 +4,12 @@ use strum::{Display, EnumString};
 
 #[derive(Debug, Clone, Serialize)]
 pub struct ResolveResult {
+    pub quality: Quality,
     pub m3u8: String,
 }
 
 #[derive(Debug, Clone, EnumString, Display, Serialize)]
+#[serde(rename_all = "snake_case")]
 #[strum(serialize_all = "snake_case")]
 pub enum Quality {
     Hd720p,

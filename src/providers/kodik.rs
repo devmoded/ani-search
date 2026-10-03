@@ -93,7 +93,10 @@ impl Kodik {
                 .clone(),
         };
 
-        Ok(ResolveResult { m3u8 })
+        Ok(ResolveResult {
+            quality: quality.clone(),
+            m3u8,
+        })
     }
 }
 
