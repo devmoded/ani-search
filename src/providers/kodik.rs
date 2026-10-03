@@ -55,7 +55,13 @@ impl Kodik {
 
     pub async fn resolve(&self, player_url: &str, quality: &Quality) -> Result<ResolveResult> {
         let url = format!("https:{player_url}");
-        let links = kodik_parser::parse(&self.resolve_client, &url).await?.links;
+        let links = kodik_parser::parse(&self.resolve_client, &url)
+            .await
+            .context(Error::Resolve {
+                url: url.clone(),
+                src: Sources::Kodik,
+            })?
+            .links;
 
         let m3u8 = match quality {
             Quality::Hd720p => links
