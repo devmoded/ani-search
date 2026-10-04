@@ -1,10 +1,14 @@
 use crate::providers::shikimori::Orders;
-use crate::{APP_NAME, types::Quality};
+use crate::{APP_NAME, APP_VERSION, types::Quality};
 use clap::{Parser, Subcommand};
 
 #[derive(Parser, Debug)]
 #[command(name = APP_NAME, version)]
 pub struct Cli {
+    #[arg(long, default_value = APP_NAME)]
+    pub client_name: String,
+    #[arg(long, default_value = APP_VERSION)]
+    pub client_version: String,
     #[command(subcommand)]
     pub command: Commands,
 }

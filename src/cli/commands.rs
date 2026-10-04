@@ -4,7 +4,6 @@ use crate::cli::cli::{KodikCommands, ShikimoriCommands};
 use crate::output::Output;
 use crate::providers::kodik::Kodik;
 use crate::providers::shikimori::Shikimori;
-use crate::{APP_NAME, APP_VERSION};
 use anyhow::Result;
 use clap::Parser;
 use reqwest::Client;
@@ -13,7 +12,7 @@ pub async fn setup() -> Result<()> {
     let cli = Cli::parse();
     let output = Output::new();
     let reqwest_client = Client::builder()
-        .user_agent(format!("{APP_NAME}-rust/{APP_VERSION}"))
+        .user_agent(format!("{}-rust/{}", cli.client_name, cli.client_version))
         .build()?;
 
     match cli.command {
