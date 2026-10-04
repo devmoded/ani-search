@@ -103,7 +103,7 @@ impl From<Anime> for Release {
             } else {
                 None
             },
-            shikimori_id: Some(a.id.to_string()),
+            shikimori_id: Some(a.id),
             translation: None,
             seasons: None,
         };

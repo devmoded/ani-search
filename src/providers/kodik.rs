@@ -113,7 +113,10 @@ impl From<&kodik_api::types::Release> for Release {
         Release {
             title: r.title_orig.clone(),
             title_ru: Some(r.title.clone()),
-            shikimori_id: r.shikimori_id.clone(),
+            shikimori_id: match r.shikimori_id.clone() {
+                Some(id) => Some(id.parse().expect("не удалось конвертировать shikimori id")),
+                None => None,
+            },
             translation: Some(Translation::from(&r.translation)),
             seasons: match &r.seasons {
                 Some(seasons) => Some(seasons.iter().map(|(_, s)| Season::from(s)).collect()),

@@ -26,7 +26,7 @@ pub struct Response {
 pub struct Release {
     pub title: String,
     pub title_ru: Option<String>,
-    pub shikimori_id: Option<String>,
+    pub shikimori_id: Option<u64>,
     pub translation: Option<Translation>,
     pub seasons: Option<Vec<Season>>,
 }
