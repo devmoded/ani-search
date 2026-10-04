@@ -12,7 +12,7 @@ pub async fn setup() -> Result<()> {
     let cli = Cli::parse();
     let output = Output::new();
     let reqwest_client = Client::builder()
-        .user_agent(format!("{}-rust/{}", cli.client_name, cli.client_version))
+        .user_agent(format!("{}/{}", cli.client_name, cli.client_version))
         .build()?;
 
     match cli.command {
