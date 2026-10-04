@@ -12,7 +12,8 @@ async fn main() {
     match cli::run().await {
         Ok(()) => {}
         Err(err) => {
-            eprintln!("Error: {}\n{}", err, err.root_cause())
+            eprintln!("Error: {}\n{}", err, err.root_cause());
+            std::process::exit(1)
         }
     }
 }
