@@ -16,8 +16,8 @@ pub struct Cli {
 #[derive(Subcommand, Debug)]
 pub enum Commands {
     Shikimori {
-        #[arg(long)]
-        api_url: Option<String>,
+        #[arg(long, default_value = "https://shikimori.io")]
+        api_url: String,
         #[command(subcommand)]
         command: ShikimoriCommands,
     },

@@ -17,10 +17,6 @@ pub async fn setup() -> Result<()> {
 
     match cli.command {
         Commands::Shikimori { api_url, command } => {
-            let api_url = match api_url {
-                Some(api) => api,
-                None => "https://shikimori.io".to_string(),
-            };
             let shikimori = Shikimori::new(&api_url, reqwest_client);
             match command {
                 ShikimoriCommands::Search {
