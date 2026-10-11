@@ -72,6 +72,30 @@ pub struct Image {
 }
 
 #[derive(Deserialize, Debug, Serialize)]
+pub struct Screenshot {
+    original: String,
+    preview: String,
+}
+
+#[derive(Deserialize, Debug, Serialize)]
+pub struct Studio {
+    name: String,
+    filtered_name: String,
+    id: u32,
+    image: String,
+    real: bool,
+}
+
+#[derive(Deserialize, Debug, Serialize)]
+pub struct Genre {
+    id: u32,
+    name: String,
+    russian: String,
+    // kind: String,
+    entry_type: String,
+}
+
+#[derive(Deserialize, Debug, Serialize)]
 pub struct Anime {
     id: u64,
     name: String,
@@ -87,11 +111,15 @@ pub struct Anime {
     aired_on: Option<String>,
     released_on: Option<String>,
     rating: Option<Rating>,
+    studios: Vec<Studio>,
+    genres: Vec<Genre>,
     duration: Option<u32>,
     description: Option<String>,
+    description_html: Option<String>,
     anons: Option<bool>,
     ongoing: Option<bool>,
     myanimelist_id: Option<u32>,
+    screenshots: Vec<Screenshot>,
 }
 
 impl From<Anime> for Release {
