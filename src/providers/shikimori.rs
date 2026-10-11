@@ -78,6 +78,17 @@ pub struct Screenshot {
 }
 
 #[derive(Deserialize, Debug, Serialize)]
+pub struct Video {
+    id: u32,
+    name: String,
+    hosting: String,
+    kind: Kind,
+    image_url: String,
+    player_url: String,
+    url: String,
+}
+
+#[derive(Deserialize, Debug, Serialize)]
 pub struct Studio {
     name: String,
     filtered_name: String,
@@ -119,6 +130,7 @@ pub struct Anime {
     anons: Option<bool>,
     ongoing: Option<bool>,
     myanimelist_id: Option<u32>,
+    videos: Vec<Video>,
     screenshots: Vec<Screenshot>,
 }
 
