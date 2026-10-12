@@ -122,16 +122,16 @@ pub struct Anime {
     aired_on: Option<String>,
     released_on: Option<String>,
     rating: Option<Rating>,
-    studios: Vec<Studio>,
-    genres: Vec<Genre>,
+    studios: Option<Vec<Studio>>,
+    genres: Option<Vec<Genre>>,
     duration: Option<u32>,
     description: Option<String>,
     description_html: Option<String>,
     anons: Option<bool>,
     ongoing: Option<bool>,
     myanimelist_id: Option<u32>,
-    videos: Vec<Video>,
-    screenshots: Vec<Screenshot>,
+    videos: Option<Vec<Video>>,
+    screenshots: Option<Vec<Screenshot>>,
 }
 
 impl From<Anime> for Release {
